@@ -70,18 +70,18 @@ Tester avec **un vrai utilisateur membre** de `GG_RH` et vérifier lecture / cr�
 
 ## 7. Cas pratique REA — créer un partage sécurisé dans l'interface graphique
 
-**Énoncé type :** le dossier \`D:\Partages\RH\` est accessible en \`\\SRV-FICHIERS\RH\`. Les membres du service RH doivent pouvoir **lire et modifier**, les autres utilisateurs ordinaires ne doivent pas y accéder.
+**Énoncé type :** le dossier `D:\Partages\RH` est accessible en `\\SRV-FICHIERS\RH`. Les membres du service RH doivent pouvoir **lire et modifier**, les autres utilisateurs ordinaires ne doivent pas y accéder.
 
-**Avant de commencer :** vérifier que le disque \`D:\` existe, ou adapter le chemin à l'énoncé.
+**Avant de commencer :** vérifier que le disque `D:` existe, ou adapter le chemin à l'énoncé.
 
-1. Dans l'Explorateur sur le **serveur de fichiers**, créer \`D:\Partages\RH\`.
-2. Clic droit sur \`RH\` → **Propriétés → Partage → Partage avancé**.
-3. Cocher **Partager ce dossier**, nommer le partage \`RH\`.
-4. Cliquer sur **Autorisations**. Contrôler les entrées existantes. Donner au groupe **local de domaine \`GL_RH_RW\`** l'accès de partage approprié (**Modifier** pour l'exemple).
+1. Dans l'Explorateur sur le **serveur de fichiers**, créer `D:\Partages\RH`.
+2. Clic droit sur `RH` → **Propriétés → Partage → Partage avancé**.
+3. Cocher **Partager ce dossier**, nommer le partage `RH`.
+4. Cliquer sur **Autorisations**. Contrôler les entrées existantes. Donner au groupe **local de domaine `GL_RH_RW`** l'accès de partage approprié (**Modifier** pour l'exemple).
 5. Ne pas retirer les accès administrateur/SYSTEM nécessaires. Éviter de laisser un accès en modification à **Tout le monde** si l'énoncé demande un partage réservé.
 6. Revenir dans **Propriétés → Sécurité** : onglet des **droits NTFS**.
-7. Cliquer sur **Modifier → Ajouter**, sélectionner \`GL_RH_RW\` et lui attribuer **Modification** ; conserver les droits techniques nécessaires.
-8. Fermer les fenêtres, puis vérifier le partage dans \`fsmgmt.msc\` (**Dossiers partagés**).
+7. Cliquer sur **Modifier → Ajouter**, sélectionner `GL_RH_RW` et lui attribuer **Modification** ; conserver les droits techniques nécessaires.
+8. Fermer les fenêtres, puis vérifier le partage dans `fsmgmt.msc` (**Dossiers partagés**).
 
 **Règle :** pour un accès par le réseau, les permissions **SMB ET NTFS** sont évaluées ; une permission sur le partage ne suffit pas si NTFS refuse l'accès.
 
@@ -89,17 +89,17 @@ Tester avec **un vrai utilisateur membre** de `GG_RH` et vérifier lecture / cr�
 
 **Énoncé type :** deux utilisateurs RH doivent accéder au même dossier sans recevoir chacun des permissions NTFS individuelles.
 
-**Dans \`dsa.msc\` — Utilisateurs et ordinateurs Active Directory :**
+**Dans `dsa.msc` — Utilisateurs et ordinateurs Active Directory :**
 
-1. Dans l'OU adéquate, créer un **groupe de sécurité global** \`GG_RH\`.
-2. Ajouter les comptes RH dans l'onglet **Membres** de \`GG_RH\`.
-3. Créer un **groupe de sécurité de domaine local** \`GL_RH_RW\`.
-4. Ajouter **\`GG_RH\` en tant que membre de \`GL_RH_RW\`**.
-5. Donner à **\`GL_RH_RW\`** les droits sur le dossier et le partage, pas directement à chaque utilisateur.
+1. Dans l'OU adéquate, créer un **groupe de sécurité global** `GG_RH`.
+2. Ajouter les comptes RH dans l'onglet **Membres** de `GG_RH`.
+3. Créer un **groupe de sécurité de domaine local** `GL_RH_RW`.
+4. Ajouter **`GG_RH` en tant que membre de `GL_RH_RW`**.
+5. Donner à **`GL_RH_RW`** les droits sur le dossier et le partage, pas directement à chaque utilisateur.
 
 **Chaîne attendue :**
 
-\`Utilisateur → GG_RH (global) → GL_RH_RW (domaine local) → droits SMB/NTFS sur RH\`
+`Utilisateur → GG_RH (global) → GL_RH_RW (domaine local) → droits SMB/NTFS sur RH`
 
 **Vérifier dans PowerShell (sur un poste avec RSAT) :**
 
@@ -115,8 +115,8 @@ Une modification d'appartenance aux groupes peut nécessiter une **nouvelle conn
 
 **Ne pas tester uniquement avec un compte administrateur**, qui peut disposer d'autres droits.
 
-1. Sur un **poste du domaine**, se connecter avec un utilisateur membre de \`GG_RH\`.
-2. Ouvrir \`\\SRV-FICHIERS\RH\` depuis l'Explorateur de fichiers.
+1. Sur un **poste du domaine**, se connecter avec un utilisateur membre de `GG_RH`.
+2. Ouvrir `\\SRV-FICHIERS\RH` depuis l'Explorateur de fichiers.
 3. Essayer de **lire**, **créer**, **modifier**, puis **supprimer** un fichier de test, si l'énoncé prévoit ces opérations.
 4. Refaire le test avec un utilisateur qui **n'est pas membre** du groupe autorisé.
 5. Nettoyer le fichier de test.
@@ -144,21 +144,21 @@ Get-Acl "D:\Partages\RH" | Format-List
 
 | Vérification | Manipulation |
 |---|---|
-| Le nom du serveur se résout-il ? | \`nslookup SRV-FICHIERS\` |
-| Le partage est-il joignable ? | \`Test-NetConnection SRV-FICHIERS -Port 445\` dans PowerShell |
-| Le partage existe-t-il ? | \`Get-SmbShare\` sur le serveur |
-| Le compte a-t-il le bon groupe ? | \`whoami /groups\` sur le client, puis vérifier AD |
-| Les droits **de partage** autorisent-ils le compte ? | \`Get-SmbShareAccess -Name RH\` |
+| Le nom du serveur se résout-il ? | `nslookup SRV-FICHIERS` |
+| Le partage est-il joignable ? | `Test-NetConnection SRV-FICHIERS -Port 445` dans PowerShell |
+| Le partage existe-t-il ? | `Get-SmbShare` sur le serveur |
+| Le compte a-t-il le bon groupe ? | `whoami /groups` sur le client, puis vérifier AD |
+| Les droits **de partage** autorisent-ils le compte ? | `Get-SmbShareAccess -Name RH` |
 | Les droits **NTFS** l'autorisent-ils ? | Propriétés → Sécurité → Avancé → **Accès effectif** |
-| Le client utilise-t-il un ancien compte ? | \`net use\` ; vérifier la session active |
+| Le client utilise-t-il un ancien compte ? | `net use` ; vérifier la session active |
 
 **Attention :** les refus explicites et les droits hérités peuvent influencer l'accès. Ne pas désactiver l'héritage ni supprimer des ACLs pour « essayer ».
 
 ## 11. Fichier d'exemple et preuves pour le jury
 
-- Capture du dossier \`RH\` et de **Partage avancé → Autorisations**.
-- Capture de l'onglet **Sécurité** avec \`GL_RH_RW\`.
-- Capture des membres de \`GG_RH\` et de \`GL_RH_RW\`.
+- Capture du dossier `RH` et de **Partage avancé → Autorisations**.
+- Capture de l'onglet **Sécurité** avec `GL_RH_RW`.
+- Capture des membres de `GG_RH` et de `GL_RH_RW`.
 - Test d'accès depuis un utilisateur du domaine et, si demandé, test de refus depuis un autre.
 
 **Référence :** [Partages et permissions NTFS — Microsoft Learn](https://learn.microsoft.com/fr-fr/iis/web-hosting/configuring-servers-in-the-windows-web-platform/configuring-share-and-ntfs-permissions)

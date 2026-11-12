@@ -63,11 +63,11 @@ ipconfig /flushdns
 
 - Si l'IP du serveur répond mais pas son nom : examiner **DNS**, pas DHCP en premier.
 - Vérifier le serveur DNS annoncé au client (option **006** DHCP si applicable).
-- Sur le serveur DNS : console \`dnsmgmt.msc\` → **Zones de recherche directes** → zone du domaine → enregistrement demandé.
-- Si \`nslookup\` marche avec une adresse de serveur explicite seulement, examiner les DNS configurés sur le client.
-- Si les noms répondent mais pas \`ping\`, cela ne prouve pas forcément une panne DNS : ICMP peut être bloqué.
+- Sur le serveur DNS : console `dnsmgmt.msc` → **Zones de recherche directes** → zone du domaine → enregistrement demandé.
+- Si `nslookup` marche avec une adresse de serveur explicite seulement, examiner les DNS configurés sur le client.
+- Si les noms répondent mais pas `ping`, cela ne prouve pas forcément une panne DNS : ICMP peut être bloqué.
 
-**Preuve :** \`nslookup\` retourne l'enregistrement correct depuis le client.
+**Preuve :** `nslookup` retourne l'enregistrement correct depuis le client.
 
 ## 4. Windows — une GPO n'est pas appliquée
 
@@ -80,7 +80,7 @@ gpresult /h "%TEMP%\rapport-gpo.html"
 
 **Vérifier :** bonne **OU utilisateur ou ordinateur** selon le paramètre, lien activé, filtrage de sécurité, DNS du domaine, connexion du compte cible. Une stratégie utilisateur peut nécessiter une **déconnexion/reconnexion**.
 
-**Journal :** \`eventvwr.msc\` → **Journaux des applications et services → Microsoft → Windows → GroupPolicy → Operational**.
+**Journal :** `eventvwr.msc` → **Journaux des applications et services → Microsoft → Windows → GroupPolicy → Operational**.
 
 **Preuve :** GPO présente dans les stratégies appliquées **et** comportement attendu visible. [Voir GPO](GPO.md).
 
@@ -107,13 +107,13 @@ Get-SmbShareAccess -Name RH
 Get-Acl "D:\Partages\RH" | Format-List
 ~~~
 
-**Vérifier :** partage \`\\SRV-FICHIERS\RH\` réel, droits **de partage + NTFS**, groupes **AGDLP**, session utilisateur et jeton de groupes (ouvrir une nouvelle session après ajout à un groupe).
+**Vérifier :** partage `\\SRV-FICHIERS\RH` réel, droits **de partage + NTFS**, groupes **AGDLP**, session utilisateur et jeton de groupes (ouvrir une nouvelle session après ajout à un groupe).
 
 **Preuve :** création/modification d'un fichier de test avec un compte autorisé ; refus avec compte non autorisé si demandé. [Voir Partages SMB](Partages-SMB.md).
 
 ## 6. Windows — un compte AD ne peut pas se connecter
 
-**Console :** \`dsa.msc\` → utilisateur → **Propriétés → Compte**.
+**Console :** `dsa.msc` → utilisateur → **Propriétés → Compte**.
 
 - Compte **désactivé** ?
 - Compte **verrouillé** ? (différent de désactivé)
@@ -151,13 +151,13 @@ cat /etc/hosts
 | Pas de bonne adresse IP | interface, configuration IP, DHCP |
 | IP correcte mais pas de route | passerelle / route par défaut |
 | IP externe accessible, nom impossible | DNS ou ordre de résolution |
-| \`/etc/hosts\` fournit la mauvaise IP | corriger l'entrée locale |
-| \`hosts:\` n'inclut pas \`dns\` | contrôler \`nsswitch.conf\` |
-| \`resolv.conf\` incorrect | contrôler le gestionnaire réseau et le DNS configuré |
+| `/etc/hosts` fournit la mauvaise IP | corriger l'entrée locale |
+| `hosts:` n'inclut pas `dns` | contrôler `nsswitch.conf` |
+| `resolv.conf` incorrect | contrôler le gestionnaire réseau et le DNS configuré |
 
-**Attention :** \`/etc/resolv.conf\` peut être régénéré automatiquement. Ne pas redémarrer le réseau depuis SSH sans garder un accès console.
+**Attention :** `/etc/resolv.conf` peut être régénéré automatiquement. Ne pas redémarrer le réseau depuis SSH sans garder un accès console.
 
-**Preuve :** \`getent hosts\` renvoie la bonne adresse ; \`ping\`/connexion réussissent selon le protocole testé.
+**Preuve :** `getent hosts` renvoie la bonne adresse ; `ping`/connexion réussissent selon le protocole testé.
 
 ## 8. Debian — Apache ne démarre pas ou n'affiche pas le site
 
@@ -172,10 +172,10 @@ ls -la /etc/apache2/sites-enabled/
 
 - **Syntaxe en erreur :** vérifier la ligne du VirtualHost et corriger.
 - **Service inactif :** examiner les journaux avant de redémarrer.
-- **Mauvaise page :** bon \`DocumentRoot\` ? bon site dans \`sites-enabled\` ? VirtualHost par défaut prioritaire ?
-- **Erreur 403 :** droits de lecture/traversée du site, bloc \`<Directory>\`, \`Require all granted\`.
+- **Mauvaise page :** bon `DocumentRoot` ? bon site dans `sites-enabled` ? VirtualHost par défaut prioritaire ?
+- **Erreur 403 :** droits de lecture/traversée du site, bloc `<Directory>`, `Require all granted`.
 - **Erreur 404 :** chemin du fichier ou nom du document.
-- **Port 8080 demandé :** \`Listen 8080\` dans \`ports.conf\` **et** \`<VirtualHost *:8080>\`.
+- **Port 8080 demandé :** `Listen 8080` dans `ports.conf` **et** `<VirtualHost *:8080>`.
 
 **Après correction :**
 
@@ -202,10 +202,10 @@ sudo journalctl -u ssh -n 40 --no-pager
 **Vérifier :**
 
 - bonne IP, **bon port** dans MobaXterm ;
-- bon utilisateur, présence du fichier \`/home/tech/.ssh/authorized_keys\` **dans son home** ;
+- bon utilisateur, présence du fichier `/home/tech/.ssh/authorized_keys` **dans son home** ;
 - clé **publique** correcte (une ligne), clé **privée** conservée sur le poste client ;
-- permissions \`700\` sur \`.ssh\` et \`600\` sur \`authorized_keys\` ; propriétaire correct ;
-- \`PermitRootLogin no\` interdit SSH directement en root ;
+- permissions `700` sur `.ssh` et `600` sur `authorized_keys` ; propriétaire correct ;
+- `PermitRootLogin no` interdit SSH directement en root ;
 - ne pas désactiver le mot de passe avant d'avoir validé la connexion par clé.
 
 ~~~bash
@@ -216,7 +216,7 @@ sudo chmod 700 /home/tech/.ssh
 sudo chmod 600 /home/tech/.ssh/authorized_keys
 ~~~
 
-La commande \`chown -R\` n'est à utiliser que pour le **dossier .ssh de ce compte** et si le propriétaire est incorrect. **Preuve :** nouvelle session MobaXterm réussie. [Voir SSH](../Linux/SSH.md).
+La commande `chown -R` n'est à utiliser que pour le **dossier .ssh de ce compte** et si le propriétaire est incorrect. **Preuve :** nouvelle session MobaXterm réussie. [Voir SSH](../Linux/SSH.md).
 
 ## 10. Debian — problème de droits sur un dossier
 
@@ -228,7 +228,7 @@ ls -la /srv/partage
 namei -l /srv/partage
 ~~~
 
-**Distinguer :** propriétaire, groupe, \`r\` lire, \`w\` écrire, \`x\` traverser un répertoire. L'accès dépend aussi des **dossiers parents**.
+**Distinguer :** propriétaire, groupe, `r` lire, `w` écrire, `x` traverser un répertoire. L'accès dépend aussi des **dossiers parents**.
 
 **Exemple de correction uniquement si demandé :**
 
@@ -243,14 +243,14 @@ sudo chmod 770 /srv/partage
 
 | Symptôme | Test de départ |
 |---|---|
-| Poste sans IP | \`ipconfig /all\` / \`ip -br addr\` |
-| IP OK, nom KO | \`nslookup\` / \`getent hosts\` |
-| Domaine Windows introuvable | DNS AD + SRV \`_ldap._tcp.dc._msdcs\` |
-| GPO non appliquée | \`gpresult /r\` + GPMC |
-| Dossier partagé refusé | \`whoami /groups\` + droits SMB/NTFS |
-| Apache KO | \`apache2ctl configtest\` + \`journalctl -u apache2\` |
-| SSH KO | \`sshd -t\` + \`journalctl -u ssh\` |
-| Droits Linux KO | \`id\`, \`namei -l\`, \`ls -ld\` |
+| Poste sans IP | `ipconfig /all` / `ip -br addr` |
+| IP OK, nom KO | `nslookup` / `getent hosts` |
+| Domaine Windows introuvable | DNS AD + SRV `_ldap._tcp.dc._msdcs` |
+| GPO non appliquée | `gpresult /r` + GPMC |
+| Dossier partagé refusé | `whoami /groups` + droits SMB/NTFS |
+| Apache KO | `apache2ctl configtest` + `journalctl -u apache2` |
+| SSH KO | `sshd -t` + `journalctl -u ssh` |
+| Droits Linux KO | `id`, `namei -l`, `ls -ld` |
 
 > Pour une REA : montrer **l'état initial**, **la manipulation réalisée**, puis **le test final**. Ne pas installer ni reconfigurer inutilement un service déjà fonctionnel.
 

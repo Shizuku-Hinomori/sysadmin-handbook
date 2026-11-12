@@ -61,25 +61,25 @@ Vérifier l'adresse, la passerelle, le DNS, l'identité du serveur DHCP et la po
 
 ## 8. Cas pratique REA — créer une étendue DHCP entièrement dans la console
 
-**Énoncé type :** pour le réseau \`192.168.10.0/24\`, distribuer les adresses \`192.168.10.100\` à \`192.168.10.200\`, avec passerelle \`192.168.10.1\` et DNS \`192.168.10.10\`.
+**Énoncé type :** pour le réseau `192.168.10.0/24`, distribuer les adresses `192.168.10.100` à `192.168.10.200`, avec passerelle `192.168.10.1` et DNS `192.168.10.10`.
 
 **Préconditions :** le serveur possède une IP fixe ; le rôle DHCP est installé ; le serveur DHCP est **autorisé dans AD**, si applicable. Ne pas créer de DHCP concurrent sur un réseau réel.
 
 **Sur Windows Server :**
 
-1. Ouvrir **Gestionnaire de serveur → Outils → DHCP** (\`dhcpmgmt.msc\`).
+1. Ouvrir **Gestionnaire de serveur → Outils → DHCP** (`dhcpmgmt.msc`).
 2. Dérouler le serveur → **IPv4**.
 3. Clic droit sur **IPv4 → Nouvelle étendue**.
-4. Donner un nom (\`LAN10\`).
-5. Saisir **début** : \`192.168.10.100\` ; **fin** : \`192.168.10.200\` ; masque \`255.255.255.0\`.
+4. Donner un nom (`LAN10`).
+5. Saisir **début** : `192.168.10.100` ; **fin** : `192.168.10.200` ; masque `255.255.255.0`.
 6. Si l'énoncé l'exige, déclarer une **plage d'exclusion** à l'intérieur de l'étendue ; sinon passer cette étape.
 7. Accepter la durée de bail proposée, sauf autre consigne.
 8. Choisir **Configurer ces options maintenant** :
-   - **003 Routeur** : \`192.168.10.1\` si une passerelle existe pour ce réseau ;
-   - **006 Serveurs DNS** : \`192.168.10.10\` ;
+   - **003 Routeur** : `192.168.10.1` si une passerelle existe pour ce réseau ;
+   - **006 Serveurs DNS** : `192.168.10.10` ;
    - **015 Nom de domaine DNS** : nom exact du domaine indiqué par le sujet.
 9. Terminer et **activer l'étendue**.
-10. Dans \`IPv4 → Étendue → Pool d'adresses\`, contrôler la plage et les éventuelles exclusions.
+10. Dans `IPv4 → Étendue → Pool d'adresses`, contrôler la plage et les éventuelles exclusions.
 
 **Depuis un poste client configuré en DHCP :**
 
@@ -89,7 +89,7 @@ ipconfig /renew
 ipconfig /all
 ~~~
 
-**Résultat attendu :** IP dans la plage, bon masque, bonne passerelle et DNS. Vérifier le **serveur DHCP** affiché par \`ipconfig /all\`.
+**Résultat attendu :** IP dans la plage, bon masque, bonne passerelle et DNS. Vérifier le **serveur DHCP** affiché par `ipconfig /all`.
 
 **Équivalent PowerShell :**
 
@@ -101,12 +101,12 @@ Get-DhcpServerv4Lease -ScopeId 192.168.10.0
 
 ## 9. Cas pratique REA — exclure une plage et réserver une adresse
 
-**Énoncé type :** exclure \`.150\` à \`.159\` du pool et réserver \`.120\` à un poste identifié par son adresse MAC.
+**Énoncé type :** exclure `.150` à `.159` du pool et réserver `.120` à un poste identifié par son adresse MAC.
 
 ### A. Exclusion
 
 1. Dans **DHCP → IPv4 → Étendue → Pool d'adresses**, clic droit → **Nouvelle plage d'exclusion**.
-2. Entrer **début** \`192.168.10.150\`, **fin** \`192.168.10.159\`.
+2. Entrer **début** `192.168.10.150`, **fin** `192.168.10.159`.
 3. Vérifier que ces adresses ne sont plus attribuables **dynamiquement** par l'étendue.
 
 ~~~powershell
@@ -114,16 +114,16 @@ Add-DhcpServerv4ExclusionRange -ScopeId 192.168.10.0 -StartRange 192.168.10.150 
 Get-DhcpServerv4ExclusionRange -ScopeId 192.168.10.0
 ~~~
 
-**Attention :** ne pas réexécuter \`Add-\` si l'exclusion existe déjà.
+**Attention :** ne pas réexécuter `Add-` si l'exclusion existe déjà.
 
 ### B. Réservation DHCP
 
-1. Sur le poste cible, obtenir l'adresse physique par \`ipconfig /all\` ; relever la **bonne carte Ethernet/Wi-Fi**.
+1. Sur le poste cible, obtenir l'adresse physique par `ipconfig /all` ; relever la **bonne carte Ethernet/Wi-Fi**.
 2. Dans DHCP, ouvrir **Étendue → Réservations → Nouvelle réservation**.
-3. Renseigner **Nom**, **Adresse IP** (ex. \`192.168.10.120\`) et **Adresse MAC** du client.
+3. Renseigner **Nom**, **Adresse IP** (ex. `192.168.10.120`) et **Adresse MAC** du client.
 4. Valider puis vérifier la réservation dans la liste.
-5. Sur le client **en DHCP**, exécuter \`ipconfig /release\` puis \`ipconfig /renew\`.
-6. Contrôler \`ipconfig /all\` et les **Baux d'adresses**.
+5. Sur le client **en DHCP**, exécuter `ipconfig /release` puis `ipconfig /renew`.
+6. Contrôler `ipconfig /all` et les **Baux d'adresses**.
 
 **Variante pratique :** si un bail correspondant au bon client existe déjà, clic droit dessus → **Ajouter à la réservation**.
 
@@ -142,13 +142,13 @@ Une réservation DHCP **ne rend pas statique la carte réseau du client** : la c
    - **006 Serveurs DNS** : serveur(s) DNS ;
    - **015 Nom de domaine DNS** : suffixe du domaine.
 3. Vérifier les valeurs saisies, puis **OK**.
-4. Sur le client, renouveler le bail et vérifier \`ipconfig /all\`.
+4. Sur le client, renouveler le bail et vérifier `ipconfig /all`.
 
 **À distinguer :** options du **serveur** (globales) et options de **l'étendue** (propres au sous-réseau). Les options définies au niveau de l'étendue peuvent remplacer celles définies globalement pour les clients concernés.
 
 ## 11. Panne REA — le client reçoit une APIPA 169.254.x.x
 
-Une adresse \`169.254.x.x\` signifie généralement que le client n'a pas obtenu de bail IPv4 DHCP.
+Une adresse `169.254.x.x` signifie généralement que le client n'a pas obtenu de bail IPv4 DHCP.
 
 **Sur le client :**
 
@@ -179,6 +179,6 @@ Get-DhcpServerv4Lease -ScopeId 192.168.10.0
 
 **Point essentiel :** un problème de DNS n'explique pas à lui seul l'absence de bail DHCP : distinguer **attribution IP** et **résolution de noms**.
 
-**Preuves :** capture de l'étendue active et de ses options ; réservation ou exclusion ; \`ipconfig /all\` du client après renouvellement.
+**Preuves :** capture de l'étendue active et de ses options ; réservation ou exclusion ; `ipconfig /all` du client après renouvellement.
 
 **Référence :** [Installer et configurer DHCP — Microsoft Learn](https://learn.microsoft.com/fr-fr/windows-server/networking/technologies/dhcp/quickstart-install-configure-dhcp-server)
