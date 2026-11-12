@@ -40,7 +40,7 @@ Vérifier que l'objet ordinateur ou utilisateur est dans la **bonne OU**, que la
 
 ---
 
-## 5. Cas pratique REA — interdire le Panneau de configuration à une OU
+## 5. Cas pratique — interdire le Panneau de configuration à une OU
 
 **Énoncé type :** les utilisateurs de l'OU `Stagiaires` ne doivent plus accéder au Panneau de configuration ni aux Paramètres Windows. Les autres utilisateurs ne doivent pas être concernés.
 
@@ -69,7 +69,7 @@ Déconnecter/reconnecter la session si le changement n'est pas visible, puis ten
 
 **Si échec :** vérifier l'OU contenant **l'utilisateur**, le lien GPO, le filtrage de sécurité, la résolution du domaine et le compte réellement connecté. Pour obtenir un rapport détaillé, voir le diagnostic plus bas.
 
-## 6. Cas pratique REA — mapper un lecteur réseau par GPO
+## 6. Cas pratique — mapper un lecteur réseau par GPO
 
 **Énoncé type :** à l'ouverture de session, les utilisateurs de l'OU `RH` doivent recevoir le lecteur `R:` pointant sur `\\SRV-FICHIERS\RH`.
 
@@ -99,7 +99,7 @@ Si le lecteur n'apparaît pas, **fermer puis rouvrir la session** et vérifier l
 
 **Important :** `Configuration utilisateur` agit sur le **compte connecté** ; l'OU de l'ordinateur ne suffit pas pour ce scénario. Une préférence de mappage et ses options d'onglet **Commun** (ciblage/suppression) peuvent modifier le comportement.
 
-## 7. Cas pratique REA — bloquer l'accès au Gestionnaire des tâches
+## 7. Cas pratique — bloquer l'accès au Gestionnaire des tâches
 
 **Énoncé type :** empêcher les utilisateurs d'une OU de lancer le Gestionnaire des tâches.
 

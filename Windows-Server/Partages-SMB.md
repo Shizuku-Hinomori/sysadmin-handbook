@@ -68,7 +68,7 @@ Tester avec **un vrai utilisateur membre** de `GG_RH` et vérifier lecture / cr�
 
 ---
 
-## 7. Cas pratique REA — créer un partage sécurisé dans l'interface graphique
+## 7. Cas pratique — créer un partage sécurisé dans l'interface graphique
 
 **Énoncé type :** le dossier `D:\Partages\RH` est accessible en `\\SRV-FICHIERS\RH`. Les membres du service RH doivent pouvoir **lire et modifier**, les autres utilisateurs ordinaires ne doivent pas y accéder.
 
@@ -85,7 +85,7 @@ Tester avec **un vrai utilisateur membre** de `GG_RH` et vérifier lecture / cr�
 
 **Règle :** pour un accès par le réseau, les permissions **SMB ET NTFS** sont évaluées ; une permission sur le partage ne suffit pas si NTFS refuse l'accès.
 
-## 8. Cas pratique REA — construire les groupes AGDLP
+## 8. Cas pratique — construire les groupes AGDLP
 
 **Énoncé type :** deux utilisateurs RH doivent accéder au même dossier sans recevoir chacun des permissions NTFS individuelles.
 
@@ -111,7 +111,7 @@ Get-SmbShareAccess -Name "RH"
 
 Une modification d'appartenance aux groupes peut nécessiter une **nouvelle connexion de l'utilisateur** pour que son jeton de sécurité reflète les nouveaux groupes.
 
-## 9. Cas pratique REA — tester depuis le bon compte client
+## 9. Cas pratique — tester depuis le bon compte client
 
 **Ne pas tester uniquement avec un compte administrateur**, qui peut disposer d'autres droits.
 
@@ -140,7 +140,7 @@ Get-Acl "D:\Partages\RH" | Format-List
 
 **Résultat attendu :** RH accède avec les droits demandés, le compte hors RH ne peut pas modifier ni consulter si aucun autre droit ne le lui permet.
 
-## 10. Panne REA — « Accès refusé » à un partage
+## 10. Dépannage — « Accès refusé » à un partage
 
 | Vérification | Manipulation |
 |---|---|

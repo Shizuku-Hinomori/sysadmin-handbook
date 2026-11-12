@@ -59,7 +59,7 @@ Vérifier l'adresse, la passerelle, le DNS, l'identité du serveur DHCP et la po
 
 ---
 
-## 8. Cas pratique REA — créer une étendue DHCP entièrement dans la console
+## 8. Cas pratique — créer une étendue DHCP entièrement dans la console
 
 **Énoncé type :** pour le réseau `192.168.10.0/24`, distribuer les adresses `192.168.10.100` à `192.168.10.200`, avec passerelle `192.168.10.1` et DNS `192.168.10.10`.
 
@@ -99,7 +99,7 @@ Get-DhcpServerv4OptionValue -ScopeId 192.168.10.0
 Get-DhcpServerv4Lease -ScopeId 192.168.10.0
 ~~~
 
-## 9. Cas pratique REA — exclure une plage et réserver une adresse
+## 9. Cas pratique — exclure une plage et réserver une adresse
 
 **Énoncé type :** exclure `.150` à `.159` du pool et réserver `.120` à un poste identifié par son adresse MAC.
 
@@ -134,7 +134,7 @@ Get-DhcpServerv4Lease -ScopeId 192.168.10.0
 
 Une réservation DHCP **ne rend pas statique la carte réseau du client** : la carte doit rester configurée pour obtenir une adresse automatiquement. Choisir une IP autorisée dans l'étendue et non déjà attribuée à une autre machine.
 
-## 10. Cas pratique REA — changer les options 003, 006 et 015
+## 10. Cas pratique — changer les options 003, 006 et 015
 
 1. Dans **DHCP → IPv4 → Étendue → Options d'étendue**, clic droit → **Configurer les options**.
 2. Cocher/configurer :
@@ -146,7 +146,7 @@ Une réservation DHCP **ne rend pas statique la carte réseau du client** : la c
 
 **À distinguer :** options du **serveur** (globales) et options de **l'étendue** (propres au sous-réseau). Les options définies au niveau de l'étendue peuvent remplacer celles définies globalement pour les clients concernés.
 
-## 11. Panne REA — le client reçoit une APIPA 169.254.x.x
+## 11. Dépannage — le client reçoit une APIPA 169.254.x.x
 
 Une adresse `169.254.x.x` signifie généralement que le client n'a pas obtenu de bail IPv4 DHCP.
 

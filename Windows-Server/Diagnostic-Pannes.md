@@ -1,4 +1,4 @@
-# Diagnostic de pannes — cas pratiques REA Windows Server et Debian
+# Diagnostic de pannes — cas pratiques Windows Server et Debian
 
 > **Objectif :** partir d'un symptôme, isoler sa cause, corriger **le bon paramètre** et prouver que la réparation fonctionne. Ne pas appliquer toutes les commandes d'un bloc. Adapter noms, IP, domaine et interfaces à l'énoncé.
 
@@ -252,6 +252,6 @@ sudo chmod 770 /srv/partage
 | SSH KO | `sshd -t` + `journalctl -u ssh` |
 | Droits Linux KO | `id`, `namei -l`, `ls -ld` |
 
-> Pour une REA : montrer **l'état initial**, **la manipulation réalisée**, puis **le test final**. Ne pas installer ni reconfigurer inutilement un service déjà fonctionnel.
+> Pour une intervention pratique : montrer **l'état initial**, **la manipulation réalisée**, puis **le test final**. Ne pas installer ni reconfigurer inutilement un service déjà fonctionnel.
 
 **Référence :** [Dépannage GPO — Microsoft Learn](https://learn.microsoft.com/fr-fr/troubleshoot/windows-server/group-policy/applying-group-policy-troubleshooting-guidance)

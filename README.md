@@ -6,16 +6,16 @@ Documentation en français, avec commandes à adapter à l'environnement. Pensé
 
 > ⚠️ **Avant chaque exécution :** remplacer les IP, domaines, utilisateurs, noms de serveurs et chemins d'exemple. Vérifier l'énoncé et les droits. Les commandes ne sont pas garanties adaptées à toutes les versions/configurations ; tester sur un environnement prévu à cet effet. Ne pas publier de mots de passe, clés privées ni configurations confidentielles.
 
-## 🧰 Réalisations pratiques REA — à ouvrir pendant les manipulations
+## 🧰 Manipulations pratiques — à ouvrir pendant les manipulations
 
 | Situation | Guide |
 |---|---|
-| **Créer une GPO, bloquer une fonction, mapper un lecteur, vérifier l'application** | [GPO — cas REA](Windows-Server/GPO.md#5-cas-pratique-rea--interdire-le-panneau-de-configuration-à-une-ou) |
-| **Créer une étendue DHCP, réservation, exclusion, APIPA** | [DHCP — cas REA](Windows-Server/DHCP.md#8-cas-pratique-rea--créer-une-étendue-dhcp-entièrement-dans-la-console) |
-| **Créer un partage RH, droits NTFS/SMB, groupes AGDLP, test client** | [Partages SMB — cas REA](Windows-Server/Partages-SMB.md#7-cas-pratique-rea--créer-un-partage-sécurisé-dans-linterface-graphique) |
-| **Résoudre une panne Windows ou Debian et prouver le résultat** | [Diagnostic de pannes — Windows et Debian](Windows-Server/Diagnostic-Pannes-REA.md) |
+| **Créer une GPO, bloquer une fonction, mapper un lecteur, vérifier l'application** | [GPO — cas pratiques](Windows-Server/GPO.md#5-cas-pratique--interdire-le-panneau-de-configuration-à-une-ou) |
+| **Créer une étendue DHCP, réservation, exclusion, APIPA** | [DHCP — cas pratiques](Windows-Server/DHCP.md#8-cas-pratique--créer-une-étendue-dhcp-entièrement-dans-la-console) |
+| **Créer un partage RH, droits NTFS/SMB, groupes AGDLP, test client** | [Partages SMB — cas pratiques](Windows-Server/Partages-SMB.md#7-cas-pratique--créer-un-partage-sécurisé-dans-linterface-graphique) |
+| **Résoudre une panne Windows ou Debian et prouver le résultat** | [Diagnostic de pannes — Windows et Debian](Windows-Server/Diagnostic-Pannes.md) |
 
-**Approche REA :** énoncé type → manipulation GUI → commandes ciblées → contrôle du résultat. Ne pas exécuter toutes les commandes sans vérifier le contexte.
+**Approche pratique :** énoncé type → manipulation GUI → commandes ciblées → contrôle du résultat. Ne pas exécuter toutes les commandes sans vérifier le contexte.
 
 ## 🐧 Linux — Debian
 
